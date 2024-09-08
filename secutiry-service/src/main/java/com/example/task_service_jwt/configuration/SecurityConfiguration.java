@@ -51,7 +51,8 @@ public class SecurityConfiguration  {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests((auth)-> auth.requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/app/**").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/api/v1/main/**").permitAll()
+                        .anyRequest().permitAll())
                 .exceptionHandling(configurer->configurer.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
