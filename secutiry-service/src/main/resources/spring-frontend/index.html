@@ -1,100 +1,387 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-    <title>Document</title>
+    .nav-link {
+      color: #333;
+      margin: 0 15px;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      color: #007bff;
+      text-decoration: underline;
+    }
+
+    .header-btns button {
+      border-radius: 25px;
+      margin-left: 10px;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .header-btns button:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+
+    .banner {
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .banner h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .banner p {
+      font-size: 1.2rem;
+    }
+
+    .product-card,
+    .beverage-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .product-card:hover,
+    .beverage-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card img,
+    .beverage-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .product-price,
+    .beverage-card .product-price {
+      color: #ff0000;
+      font-weight: bold;
+    }
+
+    .product-old-price,
+    .beverage-card .product-old-price {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .product-name,
+    .beverage-card .product-name {
+      margin: 10px 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .slider-wrapper {
+      position: relative;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 123, 255, 0.7);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      transition: background-color 0.3s;
+      outline: none;
+    }
+
+    .slider-btn:hover {
+      background-color: rgba(0, 123, 255, 0.9);
+    }
+
+    .slider-btn:focus {
+      outline: none;
+    }
+
+    .slider-btn-prev {
+      left: -40px;
+    }
+
+    .slider-btn-next {
+      right: -40px;
+    }
+
+    .cart-icon {
+      font-size: 26px;
+      color: #007bff;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .cart-icon:hover {
+      color: #0056b3;
+    }
+
+    .product-card-link,
+    .beverage-card-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .product-card-link:hover,
+    .beverage-card-link:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .beverages-section {
+      background-color: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .beverages-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      text-align: left;
+      padding-left: 15px;
+    }
+
+    .product-section {
+      margin-bottom: 50px;
+    }
+
+    .d-flex {
+      display: flex;
+    }
+
+    .flex-wrap {
+      flex-wrap: wrap;
+    }
+
+    .justify-content-center {
+      justify-content: center;
+    }
+
+    .flex-column {
+      flex-direction: column;
+    }
+
+    @media (min-width: 768px) {
+      .col-md-2 {
+        flex: 0 0 16.6667%;
+        max-width: 16.6667%;
+      }
+    }
+
+    .col-md-2 {
+      padding: 15px;
+    }
+
+    .beverage-card {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .beverage-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .beverage-card .product-name,
+    .beverage-card .product-price {
+      margin: 10px 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .row {
+      margin: 0 -15px;
+    }
+  </style>
+  <title>doorms market</title>
 </head>
+
 <body>
-<div class="container">
-  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-    <div class="col-md-3 mb-2 mb-md-0">
+
+  <div class="container">
+
+    <header th:replace="~{ fragments/header_fragment :: headFragment}"></header>
+
+    <!-- Banner Section -->
+    <div class="banner">
+      <h1>добро пожаловать, пидорас</h1>
+      <p>Starts from 11th September</p>
     </div>
 
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-      <li><a href="#" class="nav-link px-2">Features</a></li>
-      <li><a href="#" class="nav-link px-2">Pricing</a></li>
-      <li><a href="#" class="nav-link px-2">FAQs</a></li>
-      <li><a href="#" class="nav-link px-2">About</a></li>
-    </ul>
-
-    <div class="col-md-3 text-end">
-      <button type="button" class="btn btn-outline-primary me-2">Login</button>
-      <button type="button" class="btn btn-primary">Sign-up</button>
-    </div>
-  </header>
-</div>
-    <main>
-
-        <section class="py-5 text-center container">
-          <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-8 mx-auto">
-              <h1 class="fw-light">Album example</h1>
-              <p class="lead text-body-secondary">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-              <p>
-                <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-              </p>
-            </div>
+    <!-- Product Slider Section -->
+    <section class="product-section">
+      <div class="slider-wrapper">
+        <button class="slider-btn slider-btn-prev"><i class="fas fa-chevron-left"></i></button>
+        <div class="owl-carousel owl-theme">
+          <!-- Product Cards in Slider -->
+          <div class="item">
+            <a href="/api/v1/product/1" class="product-card-link" th:href="@{/api/v1/product}">
+              <div class="product-card text-center">
+                <img src="https://via.placeholder.com/150" alt="Product 1">
+                <h5 class="product-name">Product Name 1</h5>
+                <p class="product-price">2399 ₽ <span class="product-old-price">3999 ₽</span></p>
+              </div>
+            </a>
           </div>
-        </section>
-      
-        <div class="album py-5 bg-body-tertiary">
-          <div class="container">
-      
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                      </div>
-                      <small class="text-body-secondary">9 mins</small>
-                    </div>
-                  </div>
-                </div>
+          <div class="item">
+            <a href="/api/v1/product/2" class="product-card-link">
+              <div class="product-card text-center">
+                <img src="https://via.placeholder.com/150" alt="Product 2">
+                <h5 class="product-name">Product Name 2</h5>
+                <p class="product-price">1599 ₽ <span class="product-old-price">3340 ₽</span></p>
               </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                      </div>
-                      <small class="text-body-secondary">9 mins</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                      </div>
-                      <small class="text-body-secondary">9 mins</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </a>
           </div>
+          <div class="item">
+            <a href="/api/v1/product/3" class="product-card-link">
+              <div class="product-card text-center">
+                <img src="https://via.placeholder.com/150" alt="Product 3">
+                <h5 class="product-name">Product Name 3</h5>
+                <p class="product-price">1659 ₽ <span class="product-old-price">4980 ₽</span></p>
+              </div>
+            </a>
+          </div>
+          <!-- Add more products similarly -->
         </div>
-      
-      </main>
+        <button class="slider-btn slider-btn-next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </section>
+
+    <!-- Beverages Section -->
+    <section class="beverages-section">
+      <h2>напитки</h2>
+      <div class="row">
+        <!-- Beverages Cards -->
+        <div class="col-md-2">
+          <a href="/api/v1/product/4" class="beverage-card-link">
+            <div class="beverage-card">
+              <img src="https://via.placeholder.com/150" alt="Product 4">
+              <h5 class="product-name">Product Name 4</h5>
+              <p class="product-price">1899 ₽ <span class="product-old-price">2999 ₽</span></p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="/api/v1/product/5" class="beverage-card-link">
+            <div class="beverage-card">
+              <img src="https://via.placeholder.com/150" alt="Product 5">
+              <h5 class="product-name">Product Name 5</h5>
+              <p class="product-price">1899 ₽ <span class="product-old-price">2999 ₽</span></p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="/api/v1/product/6" class="beverage-card-link">
+            <div class="beverage-card">
+              <img src="https://via.placeholder.com/150" alt="Product 6">
+              <h5 class="product-name">Product Name 6</h5>
+              <p class="product-price">1899 ₽ <span class="product-old-price">2999 ₽</span></p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="/api/v1/product/7" class="beverage-card-link">
+            <div class="beverage-card">
+              <img src="https://via.placeholder.com/150" alt="Product 7">
+              <h5 class="product-name">Product Name 7</h5>
+              <p class="product-price">1899 ₽ <span class="product-old-price">2999 ₽</span></p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="/api/v1/product/8" class="beverage-card-link">
+            <div class="beverage-card">
+              <img src="https://via.placeholder.com/150" alt="Product 8">
+              <h5 class="product-name">Product Name 8</h5>
+              <p class="product-price">1899 ₽ <span class="product-old-price">2999 ₽</span></p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="/api/v1/product/9" class="beverage-card-link">
+            <div class="beverage-card">
+              <img src="https://via.placeholder.com/150" alt="Product 9">
+              <h5 class="product-name">Product Name 9</h5>
+              <p class="product-price">1899 ₽ <span class="product-old-price">2999 ₽</span></p>
+            </div>
+          </a>
+        </div>
+        <!-- Repeat for more beverages as needed -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- jQuery, Bootstrap and Owl Carousel Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      var owl = $(".owl-carousel").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: false,
+        dots: false,
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 2
+          },
+          1000: {
+            items: 6 // Changed from 4 to 6
+          }
+        }
+      });
+
+      // Bind external buttons to the slider
+      $(".slider-btn-prev").click(function () {
+        owl.trigger('prev.owl.carousel');
+      });
+      $(".slider-btn-next").click(function () {
+        owl.trigger('next.owl.carousel');
+      });
+    });
+  </script>
 </body>
+
 </html>

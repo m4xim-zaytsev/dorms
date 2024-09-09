@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header class="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4"
+         th:fragment="headFragment">
+  <div class="col-md-3 mb-2 mb-md-0">
+    <h3>doorms market</h3>
+  </div>
+
+  <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <li><a href="#" class="nav-link px-2" th:href="@{/api/v1/main}" >Главная</a></li>
+    <li><a href="#" class="nav-link px-2">Категории</a></li>
+    <li><a href="#" class="nav-link px-2">Продавцы</a></li>
+    <li><a href="#" class="nav-link px-2">Скидки</a></li>
+  </ul>
+
+
+  <div class="header-btns d-flex align-items-center">
+    <a href="/cart" class="cart-icon" th:href="@{/api/v1/cart}">
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+    <button type="button" class="btn btn-outline-primary ml-2" th:href="@{/api/v1/login}">Login</button>
+    <button type="button" class="btn btn-primary ml-2">Sign-up</button>
+  </div>
+</header>
+</body>
+</html>

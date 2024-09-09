@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <title>Личный кабинет</title>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container-custom {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #007bff;
+    }
+
+    .dashboard-header h2 {
+      font-size: 1.8rem;
+      color: #007bff;
+      margin: 0;
+    }
+
+    .add-product-btn {
+      background-color: #007bff;
+      color: white;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .add-product-btn:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: box-shadow 0.3s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .product-card img {
+      width: 100%;
+      max-width: 150px;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .product-name {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin: 10px 0;
+    }
+
+    .product-price {
+      color: #ff0000;
+      font-weight: bold;
+    }
+
+    .product-old-price {
+      text-decoration: line-through;
+      color: #999;
+      margin-left: 5px;
+    }
+
+    .product-quantity {
+      font-size: 1rem;
+      color: #555;
+      margin: 10px 0;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .action-buttons .btn {
+      margin: 0 10px; /* Увеличим расстояние между кнопками */
+      transition: transform 0.3s;
+      
+    }
+
+    .edit-btn,
+    .delete-btn {
+      border-radius: 50%; /* Сделаем кнопки круглыми */
+      padding: 10px; /* Увеличим размер кнопок для лучшей визуализации круга */
+      border: none;
+      cursor: pointer;
+      outline: none;
+      transition: background-color 0.3s;
+      padding: 8px 15px;
+      border-radius: 50%;
+      margin: 0 10px;
+    }
+
+    .edit-btn {
+      background-color: #ffc107;
+      color: white;
+    }
+
+    .edit-btn:hover {
+      background-color: #e0a800;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+
+    .edit-btn:focus,
+    .delete-btn:focus,
+    .add-product-btn:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+
+<body>
+
+<header th:replace="~{ fragments/header_fragment :: headFragment}"></header>
+
+<div class="container-custom">
+    <div class="dashboard-header">
+      <h2>Личный кабинет - Мои товары</h2>
+      <button class="add-product-btn"><i class="fas fa-plus"></i> Добавить товар</button>
+    </div>
+
+    <div class="row">
+      <!-- Product Card -->
+      <div class="col-md-4 col-sm-6">
+        <div class="product-card">
+          <img src="https://via.placeholder.com/150" alt="Product 1">
+          <h5 class="product-name">Товар 1</h5>
+          <p class="product-price">1500 ₽ <span class="product-old-price">2000 ₽</span></p>
+          <p class="product-quantity">Количество: 10</p>
+          <div class="action-buttons">
+            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+            <button class="delete-btn"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Repeat Product Cards for each product -->
+      <div class="col-md-4 col-sm-6">
+        <div class="product-card">
+          <img src="https://via.placeholder.com/150" alt="Product 2">
+          <h5 class="product-name">Товар 2</h5>
+          <p class="product-price">999 ₽ <span class="product-old-price">1200 ₽</span></p>
+          <p class="product-quantity">Количество: 5</p>
+          <div class="action-buttons">
+            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+            <button class="delete-btn"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Add more products similarly -->
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Функция добавления товара
+      $(".add-product-btn").click(function () {
+        alert("Форма добавления товара будет открыта здесь.");
+        // Реализация добавления товара
+      });
+
+      // Функция редактирования товара
+      $(".edit-btn").click(function () {
+        alert("Редактирование товара.");
+        // Реализация редактирования товара
+      });
+
+      // Функция удаления товара
+      $(".delete-btn").click(function () {
+        if (confirm("Вы уверены, что хотите удалить этот товар?")) {
+          $(this).closest('.product-card').remove();
+          // Реализация удаления товара
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

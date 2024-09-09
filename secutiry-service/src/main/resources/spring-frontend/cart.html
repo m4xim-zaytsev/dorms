@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        body {
+            background-color: #f3f4f6;
+        }
+
+        .cart-header {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item img {
+            max-width: 100px;
+            border-radius: 10px;
+        }
+
+        .cart-item-details {
+            margin-left: 15px;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+        }
+
+        .cart-item-price {
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .cart-item-old-price {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-item-quantity input {
+            width: 60px;
+            text-align: center;
+        }
+
+        .cart-item-remove {
+            cursor: pointer;
+            color: #007bff;
+        }
+
+        .cart-item-remove:hover {
+            text-decoration: underline;
+        }
+
+        .cart-summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .cart-summary h3 {
+            margin-bottom: 20px;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            color: #007bff;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .cart-icon:hover {
+            color: #0056b3;
+        }
+    </style>
+    <title>Cart Page</title>
+</head>
+<body>
+
+<div class="container">
+
+    <header th:replace="~{ fragments/header_fragment :: headFragment}"></header>
+
+
+    <!-- Cart Header Section -->
+    <div class="cart-header text-center">
+        <h1>Shopping Cart</h1>
+    </div>
+
+    <!-- Cart Items Section -->
+    <div class="cart-items">
+        <div class="cart-item d-flex align-items-center">
+            <img src="https://via.placeholder.com/100" alt="Product 1" class="img-fluid">
+            <div class="cart-item-details">
+                <p class="cart-item-name">Product Name 1</p>
+                <p class="cart-item-price">2399 ₽ <span class="cart-item-old-price">3999 ₽</span></p>
+                <div class="cart-item-quantity">
+                    <input type="number" value="1" min="1">
+                    <span class="cart-item-remove ml-3">Remove</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-item d-flex align-items-center">
+            <img src="https://via.placeholder.com/100" alt="Product 2" class="img-fluid">
+            <div class="cart-item-details">
+                <p class="cart-item-name">Product Name 2</p>
+                <p class="cart-item-price">1599 ₽ <span class="cart-item-old-price">3340 ₽</span></p>
+                <div class="cart-item-quantity">
+                    <input type="number" value="2" min="1">
+                    <span class="cart-item-remove ml-3">Remove</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add more cart items similarly -->
+    </div>
+
+    <!-- Cart Summary Section -->
+    <div class="cart-summary">
+        <h3>Cart Summary</h3>
+        <p>Total: <span class="cart-summary-total">3998 ₽</span></p>
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary">Continue Shopping</button>
+            <button type="button" class="btn btn-primary">Proceed to Checkout</button>
+        </div>
+    </div>
+</div>
+
+<!-- Include jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Optional: Add your JavaScript for handling quantity changes and remove actions -->
+<script>
+    $(document).ready(function() {
+        // Handle quantity changes and remove actions if needed
+        $('.cart-item-remove').click(function() {
+            $(this).closest('.cart-item').remove();
+            // You might also need to update the total price here
+        });
+
+        // Example: Update total price on quantity change
+        $('.cart-item-quantity input').on('input', function() {
+            // Update the total price calculation here if needed
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -5,12 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/api/v1/main")
-public class MainPageController {
+@RequestMapping("/api/v1/cart")
+public class CartPageController {
 
     @GetMapping()
     public String mainPage(){
-        return "index";
+        return "cart";
     }
-
 }

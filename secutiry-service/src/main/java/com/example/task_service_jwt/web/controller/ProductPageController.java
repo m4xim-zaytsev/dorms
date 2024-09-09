@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/api/v1/main")
-public class MainPageController {
+@RequestMapping("/api/v1/product")
+public class ProductPageController {
 
     @GetMapping()
-    public String mainPage(){
-        return "index";
+    public String productPage(){
+        return "product";
     }
 
 }
