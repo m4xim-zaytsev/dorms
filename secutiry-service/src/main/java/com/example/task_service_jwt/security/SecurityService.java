@@ -1,8 +1,10 @@
 package com.example.task_service_jwt.security;
 
 import com.example.task_service_jwt.entity.RefreshToken;
+import com.example.task_service_jwt.entity.RoleType;
 import com.example.task_service_jwt.entity.User;
 import com.example.task_service_jwt.exception.AlreadyExistException;
+import com.example.task_service_jwt.exception.EntityNotFoundException;
 import com.example.task_service_jwt.exception.RefreshTokenException;
 import com.example.task_service_jwt.repository.UserRepository;
 import com.example.task_service_jwt.security.jwt.JwtUtils;
@@ -22,6 +24,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -34,6 +38,10 @@ public class SecurityService {
     private final RefreshTokenService refreshTokenService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    public User getUserByUsername(String username){
+        return userRepository.findByUsername(username).orElseThrow(()->new EntityNotFoundException("User with username\s"+username+"\snot found"));
+    }
 
     public AuthResponse authenticateUser(LoginRequest loginRequest){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -69,10 +77,10 @@ public class SecurityService {
         User user = new User();
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setEmail(request.getEmail());
-        //set rile
+        user.setName(request.getName());
         user.setUsername(request.getUsername());
 
-        user.setRoles(request.getRoles());
+        user.setRoles(Collections.singleton(RoleType.ROLE_USER));
 
         if(userRepository.existsByUsername(request.getUsername()))
             throw new AlreadyExistException("Username already exist");
