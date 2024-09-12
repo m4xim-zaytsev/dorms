@@ -1,5 +1,6 @@
 package com.example.task_service_jwt.web.controller;
 
+import com.example.task_service_jwt.security.AppUserDetails;
 import com.example.task_service_jwt.security.SecurityService;
 import com.example.task_service_jwt.web.model.request.CreateUserRequest;
 import com.example.task_service_jwt.web.model.request.LoginRequest;
@@ -8,6 +9,7 @@ import com.example.task_service_jwt.web.model.response.SimpleResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +30,7 @@ public class MainPageController {
 
     @GetMapping("/main")
     public String mainPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        String userName = (userDetails != null) ? securityService.getUserByUsername(userDetails.getUsername()).getName() : "Гость";
+        String userName = (userDetails != null) ? securityService.getUserByUsername(userDetails.getUsername()).getName() : "";
         model.addAttribute("userName", userName);
         return "index";  // Возвращает основной шаблон Thymeleaf.
     }
@@ -59,12 +61,12 @@ public class MainPageController {
         return ResponseEntity.ok(new SimpleResponse("Пользователь вышел, имя пользователя: " + userDetails.getUsername()));
     }
 
-    @GetMapping("/user/me")
+    @GetMapping("/user/hello")
     @ResponseBody
     public ResponseEntity<Map<String, String>> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails != null) {
             Map<String, String> response = new HashMap<>();
-            response.put("username", securityService.getUserByUsername(userDetails.getUsername()).getName());
+            response.put("username", ",\s"+securityService.getUserByUsername(userDetails.getUsername()).getName());
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

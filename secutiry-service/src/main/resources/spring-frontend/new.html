@@ -6,85 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="/styles/min.css">
     <title>Добавить товар</title>
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
 
-        .container-custom {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-title {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #007bff;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .form-group label {
-            font-weight: bold;
-        }
-
-        .btn-submit {
-            background-color: #007bff;
-            color: white;
-            border-radius: 25px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: 500;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .btn-submit:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        .btn-cancel {
-            background-color: #6c757d;
-            color: white;
-            border-radius: 25px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: 500;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .btn-cancel:hover {
-            background-color: #5a6268;
-            transform: scale(1.05);
-        }
-
-        .image-preview {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .image-preview img {
-            max-width: 150px;
-            border-radius: 10px;
-        }
-    </style>
 </head>
 
 <body>
-<header th:replace="~{ fragments/header_fragment :: headFragment}"></header>
 
+<div class="container">
+    <header th:replace="~{ fragments/header_fragment :: headFragment}"></header>
+</div>
 <div class="container-custom">
         <h2 class="form-title">Добавить товар</h2>
         <form>
@@ -116,30 +47,11 @@
         </form>
     </div>
 
+<header th:replace="~{ fragments/footer_fgarment :: footerFragment}"></header>
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Функция предпросмотра изображения
-            $('#productImage').change(function () {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        $('#imagePreviewImg').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            // Обработчик отправки формы
-            $('form').submit(function (event) {
-                event.preventDefault();
-                // Реализация логики добавления товара
-                alert('Товар добавлен!');
-            });
-        });
-    </script>
+    <script src="/scripts/script.js"></script>
 
 </body>
 

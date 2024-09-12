@@ -24,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -38,6 +39,17 @@ public class SecurityService {
     private final RefreshTokenService refreshTokenService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    public User getUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("Principal class: " + principal.getClass().getName());
+        if (principal instanceof AppUserDetails) {
+            AppUserDetails userDetails = (AppUserDetails) principal;
+            return userDetails.getUser();
+        }
+        throw new IllegalStateException("Principal is not an instance of AppUserDetails");
+    }
+
 
     public User getUserByUsername(String username){
         return userRepository.findByUsername(username).orElseThrow(()->new EntityNotFoundException("User with username\s"+username+"\snot found"));
@@ -114,4 +126,6 @@ public class SecurityService {
             refreshTokenService.deleteByUserId(userId);
         }
     }
+
+
 }

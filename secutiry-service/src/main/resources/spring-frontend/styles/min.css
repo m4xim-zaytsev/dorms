@@ -1,243 +1,455 @@
+
 body {
-    background-color: #f8f9fa;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-  }
+  background: linear-gradient(135deg, #f8f9fa, #ffffff); /* Добавлен градиент фона */
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-  .nav-link {
-    color: #333;
-    margin: 0 15px;
-    font-weight: 500;
-  }
+.nav-link {
+  color: #333;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: color 0.3s; /* Плавный переход цвета */
+}
 
-  .nav-link:hover {
-    color: #007bff;
-    text-decoration: underline;
-  }
+.nav-link:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
 
-  .header-btns button {
-    border-radius: 25px;
-    margin-left: 10px;
-    transition: background-color 0.3s, border-color 0.3s;
-  }
+.header-btns button {
+  border-radius: 25px;
+  margin-left: 10px;
+  transition: background-color 0.3s, border-color 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Добавлена тень */
+}
 
-  .header-btns button:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-  }
+.header-btns button:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
 
-  .banner {
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    padding: 40px 20px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
+.banner {
+  background: linear-gradient(135deg, #007bff, #0056b3); /* Градиент для баннера */
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 1.5s; /* Анимация появления */
+}
 
-  .banner h1 {
-    font-size: 2.5rem;
-    margin: 0;
-  }
+.banner h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
 
-  .banner p {
-    font-size: 1.2rem;
-  }
+.banner p {
+  font-size: 1.2rem;
+}
 
-  .product-card,
-  .beverage-card {
-    background-color: white;
-    border-radius: 15px;
-    padding: 20px;
-    margin: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+.product-card,
+.beverage-card {
+  background: rgba(255, 255, 255, 0.8); /* Матовый полупрозрачный фон */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6)); /* Градиент */
+  backdrop-filter: blur(10px); /* Эффект размытия для матового вида */
+  border-radius: 15px;
+  padding: 20px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
-  .product-card:hover,
-  .beverage-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
+.product-card:hover,
+.beverage-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 
-  .product-card img,
-  .beverage-card img {
-    width: 100%;
-    border-radius: 10px;
-  }
+.product-card img,
+.beverage-card img {
+  width: 100%;
+  border-radius: 10px;
+  transition: transform 0.3s; /* Плавная анимация при наведении */
+}
 
-  .product-price,
-  .beverage-card .product-price {
-    color: #ff0000;
-    font-weight: bold;
-  }
+.product-card img:hover,
+.beverage-card img:hover {
+  transform: scale(1.1); /* Увеличение изображения при наведении */
+}
 
-  .product-old-price,
-  .beverage-card .product-old-price {
-    text-decoration: line-through;
-    color: #999;
-  }
+.product-price,
+.beverage-card .product-price {
+  color: #ff0000;
+  font-weight: bold;
+}
 
-  .product-name,
-  .beverage-card .product-name {
-    margin: 10px 0;
-    font-size: 1.1rem;
-    font-weight: 500;
-  }
+.product-old-price,
+.beverage-card .product-old-price {
+  text-decoration: line-through;
+  color: #999;
+}
 
-  .slider-wrapper {
-    position: relative;
-  }
+.product-name,
+.beverage-card .product-name {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
 
-  .slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 123, 255, 0.7);
-    border: none;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 10;
-    transition: background-color 0.3s;
-    outline: none;
-  }
+.slider-wrapper {
+  position: relative;
+}
 
-  .slider-btn:hover {
-    background-color: rgba(0, 123, 255, 0.9);
-  }
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 123, 255, 0.7);
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавлена тень кнопкам */
+}
 
-  .slider-btn:focus {
-    outline: none;
-  }
+.slider-btn:hover {
+  background-color: rgba(0, 123, 255, 0.9);
+}
 
-  .slider-btn-prev {
-    left: -40px;
-  }
+.slider-btn:focus {
+  outline: none;
+}
 
-  .slider-btn-next {
-    right: -40px;
-  }
+.slider-btn-prev {
+  left: -40px;
+}
 
-  .cart-icon {
-    font-size: 26px;
-    color: #007bff;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
+.slider-btn-next {
+  right: -40px;
+}
 
-  .cart-icon:hover {
-    color: #0056b3;
-  }
+.cart-icon {
+  font-size: 26px;
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.3s;
+}
 
-  .product-card-link,
-  .beverage-card-link {
-    text-decoration: none;
-    color: inherit;
-  }
+.cart-icon:hover {
+  color: #0056b3;
+}
 
-  .product-card-link:hover,
-  .beverage-card-link:hover {
-    text-decoration: none;
-    color: inherit;
-  }
+.product-card-link,
+.beverage-card-link {
+  text-decoration: none;
+  color: inherit;
+}
 
-  .beverages-section {
-    background-color: white;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+.product-card-link:hover,
+.beverage-card-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
 
-  .beverages-section h2 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    text-align: left;
-    padding-left: 15px;
-  }
+.beverages-section {
+  background: rgba(255, 255, 255, 0.8); /* Матовый полупрозрачный фон */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6)); /* Градиент */
+  backdrop-filter: blur(10px); /* Эффект размытия для матового вида */
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .product-section {
-    margin-bottom: 50px;
-  }
+.beverages-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: left;
+  padding-left: 15px;
+}
 
-  .d-flex {
-    display: flex;
-  }
+.product-section {
+  margin-bottom: 50px;
+}
 
-  .flex-wrap {
-    flex-wrap: wrap;
-  }
+.d-flex {
+  display: flex;
+}
 
-  .justify-content-center {
-    justify-content: center;
-  }
+.flex-wrap {
+  flex-wrap: wrap;
+}
 
-  .flex-column {
-    flex-direction: column;
-  }
+.justify-content-center {
+  justify-content: center;
+}
 
-  @media (min-width: 768px) {
-    .col-md-2 {
-      flex: 0 0 16.6667%;
-      max-width: 16.6667%;
-    }
-  }
+.flex-column {
+  flex-direction: column;
+}
 
+@media (min-width: 768px) {
   .col-md-2 {
-    padding: 15px;
+    flex: 0 0 16.6667%;
+    max-width: 16.6667%;
   }
+}
 
-  .beverage-card {
-    width: 100%;
-    max-width: 100%;
-  }
+.col-md-2 {
+  padding: 15px;
+}
 
-  .beverage-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
+.beverage-card {
+  width: 100%;
+  max-width: 100%;
+}
 
-  .beverage-card .product-name,
-  .beverage-card .product-price {
-    margin: 10px 0;
-    font-size: 1.1rem;
-    font-weight: 500;
-  }
+.beverage-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
 
-  .row {
-    margin: 0 -15px;
+.beverage-card .product-name,
+.beverage-card .product-price {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.row {
+  margin: 0 -15px;
+}
+
+/* Стили для формы авторизации */
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  background-color: #fff; /* Добавлен белый фон */
+  border-radius: 15px; /* Скругление краев */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Тень */
+  margin-top: 50px; /* Отступ сверху */
+  animation: fadeInUp 0.8s; /* Анимация появления */
+}
+
+.form-signin .form-signin-heading {
+  margin-bottom: 30px;
+  font-weight: 600; /* Увеличен вес шрифта */
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+  border-color: #007bff; /* Изменен цвет границы при фокусе */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Добавлена тень */
+}
+
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+  border-radius: 0;
+  margin-bottom: 10px;
+  padding: 15px; /* Увеличен размер полей */
+}
+
+.form-signin button {
+  background-color: #007bff; /* Сделана синей */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.form-signin button:hover {
+  background-color: #0056b3; /* Темно-синий при наведении */
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
   }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.btn-as-link {
+  background: none;
+  border: none;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+}
+.btn-as-link:hover {
+  color: #0056b3; /* Цвет при наведении */
+  text-decoration: none; /* Убираем подчеркивание при наведении */
+}
 
 
-  /*/sinin
+/* new/
 
-   */
-  .form-signin {
-    max-width: 330px;
-    padding: 15px;
-    margin: auto;
-  }
-  .form-signin .form-signin-heading {
-    margin-bottom: 30px;
-  }
-  .form-signin .form-control {
-    position: relative;
-    height: auto;
-    box-sizing: border-box;
-    border-radius: 0;
-  }
-  .form-signin .form-control:focus {
-    z-index: 2;
-  }
-  .form-signin input[type="text"], .form-signin input[type="password"] {
-    border-radius: 0;
-  }
+ */
+
+body {
+  background-color: #f8f9fa;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container-custom {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #007bff;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.form-group label {
+  font-weight: bold;
+}
+
+.btn-submit {
+  background-color: #007bff;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-submit:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-cancel:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+}
+
+.image-preview {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.image-preview img {
+  max-width: 150px;
+  border-radius: 10px;
+}
+
+/* Общие стили для body и html */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Общие стили для body и html */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Контейнер для страницы, который занимает всю высоту */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Основной контент */
+.content {
+  flex: 1; /* Основной контент расширяется, чтобы занять все доступное пространство */
+}
+
+/* Футер */
+.footer {
+  background-color: #343a40; /* Цвет фона футера */
+  color: #fff; /* Цвет текста */
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.footer .container {
+  max-width: 1140px; /* Максимальная ширина контейнера */
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer .social-icons i {
+  margin: 0 10px;
+}

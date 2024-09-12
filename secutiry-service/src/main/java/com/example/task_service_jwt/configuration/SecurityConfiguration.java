@@ -51,7 +51,7 @@ public class SecurityConfiguration  {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/login", "/api/v1/auth/logout").permitAll()  // Разрешаем доступ к этим эндпоинтам без аутентификации
-                        .requestMatchers("/api/v1/user/me").authenticated()  // Этот эндпоинт требует аутентификации
+                        .requestMatchers("/api/v1/user/hello").authenticated()
                         .anyRequest().permitAll())  // Все остальные запросы разрешены
                 .exceptionHandling(configurer -> configurer
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint))  // Обработка ошибок аутентификации

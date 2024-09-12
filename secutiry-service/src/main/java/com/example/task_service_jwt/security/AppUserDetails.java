@@ -14,18 +14,21 @@ public class AppUserDetails implements UserDetails {
 
     private final User user;
 
+    public User getUser() {
+        return user;
+    }
 
-    public Long getId(){
+    public Long getId() {
         return user.getId();
     }
 
-    public String getEmail(){
-        return  user.getEmail();
+    public String getEmail() {
+        return user.getEmail();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream().map(r-> new SimpleGrantedAuthority(r.name()))
+        return user.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.name()))
                 .collect(Collectors.toList());
     }
 
