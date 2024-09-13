@@ -3,14 +3,15 @@ $(document).ready(function () {
     function checkAuthState() {
         const authButtonsContainer = document.getElementById("auth-buttons");
         authButtonsContainer.innerHTML = "";  // Очистка контейнера кнопок
-
+        console.log("hello")
         const token = localStorage.getItem("jwtToken");  // Получение токена из локального хранилища
         if (token) {
             authButtonsContainer.innerHTML = `
-      <button type="button" class="btn btn-outline-primary ml-2" onclick="redirectToProfile()">Profile</button>
-      <button type="button" class="btn btn-danger ml-2" onclick="logout()">Logout</button>
-    `;
+            <button type="button" class="btn btn-outline-primary ml-2" onclick="redirectToProfile()">Profile</button>
+            <button type="button" class="btn btn-danger ml-2" onclick="logout()">Logout</button>
+        `;
 
+            // Проверка аутентификации
             $.ajax({
                 url: "/api/v1/user/hello",
                 type: "GET",
@@ -26,12 +27,13 @@ $(document).ready(function () {
             });
         } else {
             authButtonsContainer.innerHTML = `
-      <button type="button" class="btn btn-outline-primary ml-2" data-toggle="modal" data-target="#loginModal">Login</button>
-      <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#registerModal">Sign Up</button>
-    `;
+            <button type="button" class="btn btn-outline-primary ml-2" data-toggle="modal" data-target="#loginModal">Login</button>
+            <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#registerModal">Sign Up</button>
+        `;
             $('#greeting-text').html(getGreeting());  // Установите приветствие для неавторизованных пользователей
         }
     }
+
 
     // Функция для входа пользователя
     window.handleLogin = function () {
@@ -45,7 +47,8 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify({ username, password }),  // Передача данных в формате JSON
             success: function(response) {
-                localStorage.setItem('jwtToken', response.token);  // Сохранение токена в локальном хранилище
+                localStorage.setItem('jwtToken', response.token);
+                // Сохранение токена в локальном хранилище
                 window.location.href = '/api/v1/main';  // Перенаправление на главную страницу
             },
             error: function(error) {
@@ -75,8 +78,31 @@ $(document).ready(function () {
 
     // Функция для перенаправления на страницу профиля
     window.redirectToProfile = function () {
-        window.location.href = "/api/v1/profile";  // Перенаправление на профиль
+        const token = localStorage.getItem("jwtToken");
+        console.log("JWT Token:", token);  // Проверка наличия токена
+        if (token) {
+            $.ajax({
+                url: "/api/v1/profile",
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function(response) {
+                    window.location.href = "/api/v1/profile";  // Перенаправление на страницу профиля
+                },
+                error: function(error) {
+                    console.error("Ошибка при переходе на профиль:", error.responseJSON.message);
+                    alert("Ошибка аутентификации. Пожалуйста, войдите заново.");
+                    window.location.href = "/api/v1/auth/login";  // Перенаправление на страницу входа при ошибке
+                }
+            });
+        } else {
+            alert("Пожалуйста, войдите в систему.");
+            window.location.href = "/api/v1/auth/login";  // Перенаправление на страницу входа, если токена нет
+        }
     }
+
+
 
     // Вызов функции проверки состояния аутентификации при загрузке страницы
     checkAuthState();
@@ -147,6 +173,8 @@ $(document).ready(function () {
             }
         });
     });
+
+
 });
 
 // Функция для получения приветствия в зависимости от времени суток

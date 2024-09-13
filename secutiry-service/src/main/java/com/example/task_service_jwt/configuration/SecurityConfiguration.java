@@ -22,14 +22,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
-public class SecurityConfiguration  {
+public class SecurityConfiguration {
 
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtTokenFilter jwtTokenFilter;
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
@@ -50,9 +50,10 @@ public class SecurityConfiguration  {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/login", "/api/v1/auth/logout").permitAll()  // Разрешаем доступ к этим эндпоинтам без аутентификации
+                        .requestMatchers("/api/v1/auth/login", "/api/v1/auth/logout").permitAll()
                         .requestMatchers("/api/v1/user/hello").authenticated()
-                        .anyRequest().permitAll())  // Все остальные запросы разрешены
+                        .anyRequest().permitAll())
+
                 .exceptionHandling(configurer -> configurer
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint))  // Обработка ошибок аутентификации
                 .csrf(AbstractHttpConfigurer::disable)  // Отключаем CSRF, так как используем JWT
@@ -64,4 +65,5 @@ public class SecurityConfiguration  {
         return http.build();
     }
 }
+
 
