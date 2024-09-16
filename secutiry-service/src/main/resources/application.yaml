@@ -1,7 +1,7 @@
 spring:
   web:
     resources:
-      static-locations: classpath:/spring-frontend/
+      static-locations: classpath:/spring-frontend/ , classpath:/upload_covers/
   thymeleaf:
     prefix: classpath:/spring-frontend/
   data:

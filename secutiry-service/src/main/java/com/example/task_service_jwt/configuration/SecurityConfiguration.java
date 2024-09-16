@@ -53,15 +53,13 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/v1/auth/login", "/api/v1/auth/logout").permitAll()
                         .requestMatchers("/api/v1/user/hello").authenticated()
                         .anyRequest().permitAll())
-
-                .exceptionHandling(configurer -> configurer
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint))  // Обработка ошибок аутентификации
-                .csrf(AbstractHttpConfigurer::disable)  // Отключаем CSRF, так как используем JWT
+                .exceptionHandling(configurer->configurer.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
-                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Устанавливаем политику без состояния
+                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.
+                        sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);  // Добавляем фильтр для проверки токенов
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

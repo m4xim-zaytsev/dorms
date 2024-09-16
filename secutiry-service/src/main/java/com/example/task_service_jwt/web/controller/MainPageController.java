@@ -35,31 +35,6 @@ public class MainPageController {
         return "index";  // Возвращает основной шаблон Thymeleaf.
     }
 
-    @PostMapping("/auth/register")
-    public ResponseEntity<SimpleResponse> registerUser(@RequestBody CreateUserRequest request) {
-        securityService.register(request);  // Реализуйте этот метод в SecurityService для регистрации пользователя
-        return ResponseEntity.ok(new SimpleResponse("User created"));
-    }
-
-    @ResponseBody
-    @PostMapping("/auth/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
-        AuthResponse authResponse = securityService.authenticateUser(loginRequest);
-        return ResponseEntity.ok(authResponse);
-    }
-
-    //    @PostMapping("/refresh-token")
-//    public ResponseEntity<RefreshTokenResponse> refreshToken(@RequestBody RefreshTokenRequest request){
-//
-//        return ResponseEntity.ok(securityService.refreshToken(request));
-//    }
-
-    @ResponseBody
-    @PostMapping("/auth/logout")
-    public ResponseEntity<SimpleResponse> logoutUser(@AuthenticationPrincipal UserDetails userDetails) {
-        securityService.logout();  // Убедитесь, что этот метод обрабатывает выход пользователя.
-        return ResponseEntity.ok(new SimpleResponse("Пользователь вышел, имя пользователя: " + userDetails.getUsername()));
-    }
 
     @GetMapping("/user/hello")
     @ResponseBody

@@ -32,7 +32,7 @@ public class UserProfilePageController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping
-    public String profilePage() {
+    public String profilePage(@AuthenticationPrincipal AppUserDetails userDetails) {
         return "me";
     }
 
