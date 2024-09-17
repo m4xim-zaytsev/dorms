@@ -1,10 +1,16 @@
 
 body {
-  background: linear-gradient(135deg, #f8f9fa, #ffffff); /* Добавлен градиент фона */
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
+  background:
+          linear-gradient(to top, rgba(255, 199, 199, 0.5), transparent),   /* Градиент снизу вверх */
+          linear-gradient(to bottom, rgba(255, 227, 240, 0.5), transparent), /* Градиент сверху вниз */
+          linear-gradient(to right, rgba(244, 244, 255, 0.5), transparent),  /* Градиент слева направо */
+          linear-gradient(to left, rgba(255, 255, 190, 0.5), transparent), /* Градиент справа налево */
+          linear-gradient(135deg, #f8f9fa, #d2eeff);  /* Градиент по диагонали для центра */
 }
+
 
 .nav-link {
   color: #333;
@@ -54,7 +60,7 @@ body {
 .beverage-card {
   background: rgba(255, 255, 255, 0.8); /* Матовый полупрозрачный фон */
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6)); /* Градиент */
-  backdrop-filter: blur(10px); /* Эффект размытия для матового вида */
+  /* Удаляем backdrop-filter для удаления эффекта размытия */
   border-radius: 15px;
   padding: 20px;
   margin: 10px;

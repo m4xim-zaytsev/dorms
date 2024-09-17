@@ -51,7 +51,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/login", "/api/v1/auth/logout").permitAll()
-                        .requestMatchers("/api/v1/user/hello").authenticated()
+                        .requestMatchers("/api/v1/user/**").authenticated()
                         .anyRequest().permitAll())
                 .exceptionHandling(configurer->configurer.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .csrf(AbstractHttpConfigurer::disable)

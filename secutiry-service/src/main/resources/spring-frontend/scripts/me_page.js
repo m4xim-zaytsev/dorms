@@ -6,7 +6,7 @@ $(document).ready(function () {
     function loadUserData() {
         const token = localStorage.getItem("jwtToken");
         $.ajax({
-            url: "/api/v1/profile/details",
+            url: "/api/v1/user/details",
             type: "GET",
             headers: {
                 "Authorization": "Bearer " + token
@@ -30,7 +30,7 @@ $(document).ready(function () {
         const token = localStorage.getItem("jwtToken");
 
         $.ajax({
-            url: "/api/v1/profile/update",
+            url: "/api/v1/user/update",
             type: "PUT",
             headers: {
                 "Authorization": "Bearer " + token
@@ -91,7 +91,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: "/api/v1/profile/change-password",
+            url: "/api/v1/user/change-password",
             type: "POST",
             headers: {
                 "Authorization": "Bearer " + token

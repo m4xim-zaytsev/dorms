@@ -22,4 +22,8 @@ public class ProductCategoryServiceImpl {
     public Set<ProductCategory> findCategoriesByIds(List<Long> categoryIds) {
         return new HashSet<>(categoryRepository.findAllById(categoryIds));
     }
+
+    public List<ProductCategory> findAll(){
+        return categoryRepository.findAll();
+    }
 }

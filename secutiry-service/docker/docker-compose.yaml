@@ -8,7 +8,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=task_db
-    container_name: task_container
+    container_name: postgres
   redis:
     image: redis:7.0.12
     ports:

@@ -1,17 +1,24 @@
 $(document).ready(function () {
-    // Функция проверки аутентификации пользователя
     function checkAuthState() {
         const authButtonsContainer = document.getElementById("auth-buttons");
         authButtonsContainer.innerHTML = "";  // Очистка контейнера кнопок
-        console.log("hello")
+        console.log("Проверка аутентификации");
         const token = localStorage.getItem("jwtToken");  // Получение токена из локального хранилища
+        const navMenu = document.querySelector('.nav');
+        document.cookie = 'jwtToken=' + localStorage['jwtToken'];
+
         if (token) {
             authButtonsContainer.innerHTML = `
-            <button type="button" class="btn btn-outline-primary ml-2" onclick="redirectToProfile()">Profile</button>
-            <button type="button" class="btn btn-danger ml-2" onclick="logout()">Logout</button>
-        `;
+                <button type="button" class="btn btn-outline-primary ml-2" onclick="redirectToProfile()">Profile</button>
+                <button type="button" class="btn btn-danger ml-2" onclick="logout()">Logout</button>
+            `;
 
-            // Проверка аутентификации
+            // Добавляем пункт "Моё" в меню, если пользователь аутентифицирован
+            const myMenuItem = document.createElement('li');
+            myMenuItem.innerHTML = `<a href="/api/v1/user/my" class="nav-link px-2">Моё</a>`;
+            navMenu.appendChild(myMenuItem);  // Добавляем элемент в конец списка меню
+
+            // Пример запроса для проверки аутентификации
             $.ajax({
                 url: "/api/v1/user/hello",
                 type: "GET",
@@ -27,10 +34,10 @@ $(document).ready(function () {
             });
         } else {
             authButtonsContainer.innerHTML = `
-            <button type="button" class="btn btn-outline-primary ml-2" data-toggle="modal" data-target="#loginModal">Login</button>
-            <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#registerModal">Sign Up</button>
-        `;
-            $('#greeting-text').html(getGreeting());  // Установите приветствие для неавторизованных пользователей
+                <button type="button" class="btn btn-outline-primary ml-2" data-toggle="modal" data-target="#loginModal">Login</button>
+                <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#registerModal">Sign Up</button>
+            `;
+            $('#greeting-text').html(getGreeting());
         }
     }
 
@@ -82,23 +89,23 @@ $(document).ready(function () {
         console.log("JWT Token:", token);  // Проверка наличия токена
         if (token) {
             $.ajax({
-                url: "/api/v1/profile",
+                url: "/api/v1/user",
                 type: "GET",
                 headers: {
                     "Authorization": "Bearer " + token
                 },
                 success: function(response) {
-                    window.location.href = "/api/v1/profile";  // Перенаправление на страницу профиля
+                    window.location.href = "/api/v1/user";  // Перенаправление на страницу профиля
                 },
                 error: function(error) {
                     console.error("Ошибка при переходе на профиль:", error.responseJSON.message);
                     alert("Ошибка аутентификации. Пожалуйста, войдите заново.");
-                    window.location.href = "/api/v1/auth/login";  // Перенаправление на страницу входа при ошибке
+                    window.location.href = "/api/v1/main";  // Перенаправление на страницу входа при ошибке
                 }
             });
         } else {
             alert("Пожалуйста, войдите в систему.");
-            window.location.href = "/api/v1/auth/login";  // Перенаправление на страницу входа, если токена нет
+            window.location.href = "/api/v1/main";  // Перенаправление на страницу входа, если токена нет
         }
     }
 

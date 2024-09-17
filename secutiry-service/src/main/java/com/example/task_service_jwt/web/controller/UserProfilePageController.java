@@ -9,6 +9,7 @@ import com.example.task_service_jwt.service.impl.UserServiceImpl;
 import com.example.task_service_jwt.web.model.request.ChangePasswordRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.Cookie;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/profile")
+@RequestMapping("/api/v1/user")
 public class UserProfilePageController {
 
     private final SecurityService securityService;
@@ -32,10 +33,14 @@ public class UserProfilePageController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping
-    public String profilePage(@AuthenticationPrincipal AppUserDetails userDetails) {
+    public String profilePage() {
         return "me";
     }
 
+    @GetMapping("/my")
+    public String myProducts(){
+        return "my";
+    }
     @ResponseBody
     @GetMapping("/details")
     public ResponseEntity<UserDetailsDto> getUserDetails(@AuthenticationPrincipal AppUserDetails userDetails) {
@@ -54,11 +59,9 @@ public class UserProfilePageController {
         if (userDetailsDto == null || userDetailsDto.getUsername() == null || userDetailsDto.getName() == null) {
             throw new IllegalArgumentException("User details cannot be null");
         }
-
         User userToUpdate = userService.getUserByUsername(userDetails.getUsername());
         UserDetailsDto dataToUserUpdate = userDetailsDto;
         userService.updateUserDetails(userToUpdate, dataToUserUpdate);
-
         // Генерация нового токена
         String newJwtToken = jwtUtils.generateTokenFromUsername(userDetailsDto.getUsername());
 
@@ -66,7 +69,6 @@ public class UserProfilePageController {
         return ResponseEntity.ok(newJwtToken);
     }
 
-    // Эндпоинт для смены пароля
     @PostMapping("/change-password")
     public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest,
                                                  @AuthenticationPrincipal AppUserDetails userDetails) {
@@ -74,15 +76,12 @@ public class UserProfilePageController {
         if (changePasswordRequest == null || changePasswordRequest.getNewPassword() == null || changePasswordRequest.getCurrentPassword() == null) {
             return ResponseEntity.badRequest().body("Пароль не может быть пустым");
         }
-
         // Получаем текущего пользователя из контекста безопасности
         User currentUser = userService.getUserByUsername(userDetails.getUsername());
-
         // Проверяем текущий пароль
         if (!passwordEncoder.matches(changePasswordRequest.getCurrentPassword(), currentUser.getPassword())) {
             return ResponseEntity.badRequest().body("Текущий пароль неверен");
         }
-
         // Обновляем пароль пользователя
         currentUser.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
         userService.saveUser(currentUser); // Сохранение пользователя
