@@ -43,22 +43,21 @@ $(document).ready(function () {
         // Привязываем события для кнопок после рендеринга
         attachActionButtons();
     }
-
     // Привязка событий для кнопок редактирования и удаления
-    function attachActionButtons() {
-        $(".edit-btn").click(function () {
-            const productId = $(this).data("id");
-            alert(`Редактирование товара ID: ${productId}`);
-            // Логика редактирования
-        });
+        function attachActionButtons() {
+            $(".edit-btn").click(function () {
+                const productId = $(this).data("id");
+                window.location.href = `/api/v1/product/edit/${productId}`; // Перенаправляем на страницу редактирования
+            });
 
-        $(".delete-btn").click(function () {
-            const productId = $(this).data("id");
-            if (confirm("Вы уверены, что хотите удалить этот товар?")) {
-                deleteProduct(productId);
-            }
-        });
-    }
+            $(".delete-btn").click(function () {
+                const productId = $(this).data("id");
+                if (confirm("Вы уверены, что хотите удалить этот товар?")) {
+                    deleteProduct(productId);
+                }
+            });
+        }
+
 
     // Функция для удаления товара
     function deleteProduct(productId) {

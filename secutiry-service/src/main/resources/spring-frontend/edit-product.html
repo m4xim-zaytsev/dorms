@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="/styles/min.css">
+  <script defer src="/scripts/script.js?v=64223515"></script>
+  <script defer src="/scripts/edit_page.js?v=64223515"></script>
+  <title>редактироввать товар</title>
+</head>
+
+<body>
+
+<div class="container">
+  <header th:replace="~{ fragments/header_fragment :: headFragment}"></header>
+</div>
+
+<div class="container-custom">
+  <h3 class="form-title">edit product</h3>
+  <form id="productForm" method="post" enctype="multipart/form-data" th:action="@{'/api/v1/product/update/'+${product.id}}">
+    <input type="hidden" name="id" th:value="${product.id}">
+
+    <div class="form-group">
+      <label for="productName">Название товара</label>
+      <input type="text" class="form-control" id="productName" name="productName" th:value="${product.name}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="productPrice">Цена товара (₽)</label>
+      <input type="number" class="form-control" id="productPrice" name="productPrice" th:value="${product.price}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="productDescription">Описание товара</label>
+      <textarea class="form-control" id="productDescription" name="productDescription" rows="3" required th:text="${product.description}"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="productQuantity">Количество на складе</label>
+      <input type="number" class="form-control" id="productQuantity" name="productQuantity" th:value="${product.count}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="productCategory">Категория товара</label>
+      <select class="form-control" id="productCategory" name="productCategory" required>
+        <!-- Категории будут загружены через AJAX -->
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="productImage">Изображение товара</label>
+      <input type="file" class="form-control-file" id="productImage" name="productImage" accept="image/*" style="display:none;">
+      <button type="button" class="btn btn-primary" onclick="document.getElementById('productImage').click();">Выберите изображение</button>
+      <img id="imagePreview" th:if="${product.imageUrl != null}" th:src="@{|${product.imageUrl}|}" alt="Предпросмотр изображения" style="max-width: 100%; height: auto; margin-top: 10px; border-radius: 10px;" />
+      <p th:if="${product.imageUrl == null}">Изображение не загружено</p>
+    </div>
+
+    <button type="submit" class="btn btn-submit">Сохранить изменения</button>
+    <button type="button" class="btn btn-cancel" onclick="window.history.back();">Отмена</button>
+  </form>
+</div>
+
+<header th:replace="~{ fragments/footer_fgarment :: footerFragment}"></header>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>

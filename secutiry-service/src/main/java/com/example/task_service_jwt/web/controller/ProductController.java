@@ -40,45 +40,74 @@ public class ProductController {
         return "new";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editProductPage(@PathVariable Long id,
+                                  @AuthenticationPrincipal UserDetails userDetails,
+                                  Model model,
+                                  RedirectAttributes redirectAttributes) {
+        Product product = productService.findById(id);
+        // Получаем товар по ID
+        ProductDto productDto = ProductDto.fromEntity(product);
+
+        // Получаем пользователя, который делает запрос
+        User seller = securityService.getUserByUsername(userDetails.getUsername());
+
+        // Проверяем, является ли пользователь продавцом товара
+        if (!product.getSeller().getUsername().equals(seller.getUsername())) {
+            // Если пользователь не является продавцом, перенаправляем его с ошибкой
+            redirectAttributes.addFlashAttribute("error", "Вы не можете редактировать этот товар");
+            return "redirect:/api/v1/user/my";
+        }
+
+        // Добавляем товар в модель, чтобы передать на фронтенд
+        model.addAttribute("product", productDto);
+
+        // Также передаем категории товара для выпадающего списка
+        model.addAttribute("categories", productCategoryService.getAllCategories());
+
+        return "edit-product";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateProduct(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails,
+            @ModelAttribute ProductRequest productRequest,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            // Преобразование запроса в сущность Product
+            Product product = productMapper.requestToProduct(productRequest);
+
+            // Получение информации о пользователе, который делает запрос
+            User seller = securityService.getUserByUsername(userDetails.getUsername());
+
+            // Проверяем, что текущий пользователь является продавцом товара
+            Product existingProduct = productService.findById(id);
+            if (!existingProduct.getSeller().getUsername().equals(seller.getUsername())) {
+                redirectAttributes.addFlashAttribute("error", "Вы не можете обновить этот товар");
+                return "redirect:/api/v1/product/edit/" + id;
+            }
+
+            // Обновление товара с категориями и изображением
+            productService.updateProduct(product, id, seller, productRequest.getProductCategory(), productRequest.getProductImage());
+
+            // В случае успеха перенаправляем на страницу пользователя
+            redirectAttributes.addFlashAttribute("message", "Товар успешно обновлен");
+            return "redirect:/api/v1/user/my";
+        } catch (Exception e) {
+            // Логирование ошибки для отладки
+            e.printStackTrace();
+
+            // В случае ошибки перенаправляем на страницу редактирования с сообщением об ошибке
+            redirectAttributes.addFlashAttribute("error", "Ошибка при обновлении товара");
+            return "redirect:/api/v1/product/edit/" + id;
+        }
+    }
 
 
-//    @GetMapping("/{productId}")
-//    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long productId) {
-//
-//    }
-//
-//
-//    // Страница редактирования товара
-//    @GetMapping("/edit/{id}")
-//    public String editProductPage(@PathVariable Long id, Model model) {
-//
-//    }
-//
-//    // Метод для обновления товара
-//    @PostMapping("/update/{id}")
-//    public String updateProduct(
-//            @PathVariable Long id,
-//            @ModelAttribute ProductRequest productRequest,
-//            RedirectAttributes redirectAttributes) {
-//        try {
-//            // Получаем товар по id
-//            Product product = productService.findById(id);
-//
-//            if (product != null) {
-//                // Обновляем информацию о товаре
-//                productService.updateProduct(id, productRequest);
-//                redirectAttributes.addFlashAttribute("message", "Товар успешно обновлен");
-//                return "redirect:/api/v1/user";
-//            } else {
-//                redirectAttributes.addFlashAttribute("error", "Товар не найден");
-//                return "redirect:/api/v1/user";
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            redirectAttributes.addFlashAttribute("error", "Ошибка при обновлении товара");
-//            return "redirect:/api/v1/product/edit/" + id;
-//        }
-//    }
+
+
 
     @PostMapping("/add")
     public String addProduct(@AuthenticationPrincipal UserDetails userDetails,

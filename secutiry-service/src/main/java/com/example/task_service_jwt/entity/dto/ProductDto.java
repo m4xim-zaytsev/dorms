@@ -30,5 +30,4 @@ public class ProductDto {
                 product.getStatus() != null ? product.getStatus().name() : "UNKNOWN" // Можно использовать значение по умолчанию
         );
     }
-
 }

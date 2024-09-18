@@ -47,12 +47,41 @@ public class ProductServiceImpl {
         return productRepository.save(product);
     }
 
-    public ProductResponse updateProduckt(ProductRequest productRequest, Long id) {
+
+    public Product updateProduct(Product product, Long id, User seller, List<Long> categoryIds, MultipartFile productImage) throws IOException {
+        // Находим существующий продукт по ID
         Product productToUpdate = findById(id);
-        return null;
+
+        if (productToUpdate == null) {
+            throw new EntityNotFoundException("Product with id " + id + " not found");
+        }
+
+        // Обновляем основные поля продукта
+        productToUpdate.setName(product.getName());
+        productToUpdate.setDescription(product.getDescription());
+        productToUpdate.setPrice(product.getPrice());
+        productToUpdate.setCount(product.getCount());
+
+        // Обновляем продавца только в случае, если текущий пользователь — продавец товара
+        if (seller != null) {
+            productToUpdate.setSeller(seller);
+        }
+
+        // Обновляем категории товара, если они были переданы
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            Set<ProductCategory> categories = new HashSet<>(productCategoryService.findCategoriesByIds(categoryIds));
+            productToUpdate.setCategories(categories);
+        }
+
+        // Обновляем изображение, если оно было загружено
+        if (productImage != null && !productImage.isEmpty()) {
+            String imageUrl = imageService.saveImage(productImage);
+            productToUpdate.setImageUrl(imageUrl);
+        }
+
+        // Сохраняем обновленный продукт в базе данных
+        return productRepository.save(productToUpdate);
     }
 
-    public Product updateProduct(Long id, ProductRequest productRequest) {
-        return null;
-    }
+
 }
