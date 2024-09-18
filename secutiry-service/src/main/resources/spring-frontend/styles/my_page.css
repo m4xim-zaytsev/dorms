@@ -140,7 +140,7 @@
 
 .add-product-btn:hover {
     background-color: #0056b3; /* Темно-синий при наведении */
-    transform: scale(1.05); /* Увеличение при наведении */
+    /* Убираем transform, чтобы кнопка не дергалась */
 }
 
 .add-product-btn i {

@@ -1,7 +1,7 @@
 spring:
   web:
     resources:
-      static-locations: classpath:/spring-frontend/ , classpath:/upload_covers/
+      static-locations: classpath:/spring-frontend/
   thymeleaf:
     prefix: classpath:/spring-frontend/
   data:
@@ -21,6 +21,8 @@ spring:
 
 
 app:
+  upload:
+    path: D:\\doorms\\secutiry-service\\src\\main\\resources\\upload_covers\\
   jwt:
     secret: "secretKey"
     tokenExpiration: 30h

@@ -459,3 +459,14 @@ html, body {
 .footer .social-icons i {
   margin: 0 10px;
 }
+
+#imagePreview {
+  display: none;
+  max-width: 150px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 10px;
+  object-fit: contain;
+}

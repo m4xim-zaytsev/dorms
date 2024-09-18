@@ -34,24 +34,16 @@ public class ProductServiceImpl {
                 new EntityNotFoundException(MessageFormat.format("Product with id {} not found", id)));
     }
 
-    public Product addNewProduct(ProductRequest productRequest, User user) throws IOException {
-
-        User seller = user;
-
-        Product product = new Product();
-        product.setName(productRequest.getProductName());
-        product.setPrice(productRequest.getProductPrice());
-        product.setDescription(productRequest.getProductDescription());
-        product.setCount(productRequest.getProductQuantity());
-        product.setSeller(seller);
-
-        Set<ProductCategory> categories = new HashSet<>(productCategoryService.findCategoriesByIds(productRequest.getProductCategory()));
+    public Product addNewProduct(Product product, List<Long> categoryIds, MultipartFile productImage) throws IOException {
+        // Обрабатываем категории
+        Set<ProductCategory> categories = new HashSet<>(productCategoryService.findCategoriesByIds(categoryIds));
         product.setCategories(categories);
 
-        String imageUrl = imageService.saveImage(productRequest.getProductImage());
+        // Сохраняем изображение
+        String imageUrl = imageService.saveImage(productImage);
         product.setImageUrl(imageUrl);
 
-        // Сохранение продукта
+        // Сохраняем продукт
         return productRepository.save(product);
     }
 

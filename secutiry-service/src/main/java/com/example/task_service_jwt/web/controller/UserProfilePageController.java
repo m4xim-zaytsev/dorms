@@ -1,6 +1,7 @@
 package com.example.task_service_jwt.web.controller;
 
 import com.example.task_service_jwt.entity.User;
+import com.example.task_service_jwt.entity.dto.ProductDto;
 import com.example.task_service_jwt.entity.dto.UserDetailsDto;
 import com.example.task_service_jwt.security.AppUserDetails;
 import com.example.task_service_jwt.security.SecurityService;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 
 @Slf4j
@@ -41,6 +44,13 @@ public class UserProfilePageController {
     public String myProducts(){
         return "my";
     }
+
+    @GetMapping("/my/products")
+    public ResponseEntity<List<ProductDto>> getMyProducts(@AuthenticationPrincipal AppUserDetails userDetails) {
+        List<ProductDto> products = userService.getProductsByUserId(userDetails.getId());
+        return ResponseEntity.ok(products);
+    }
+
     @ResponseBody
     @GetMapping("/details")
     public ResponseEntity<UserDetailsDto> getUserDetails(@AuthenticationPrincipal AppUserDetails userDetails) {
@@ -90,10 +100,4 @@ public class UserProfilePageController {
 
         return ResponseEntity.ok("Пароль успешно изменен");
     }
-
-
-
-
-
-
 }

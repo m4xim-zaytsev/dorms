@@ -3,6 +3,8 @@ package com.example.task_service_jwt.web.controller;
 import com.example.task_service_jwt.entity.Product;
 import com.example.task_service_jwt.entity.ProductCategory;
 import com.example.task_service_jwt.entity.User;
+import com.example.task_service_jwt.entity.dto.ProductDto;
+import com.example.task_service_jwt.mapper.ProductMapper;
 import com.example.task_service_jwt.security.SecurityService;
 import com.example.task_service_jwt.service.impl.ProductCategoryServiceImpl;
 import com.example.task_service_jwt.service.impl.ProductServiceImpl;
@@ -30,55 +32,29 @@ public class ProductController {
 
     private final ProductServiceImpl productService;
     private final ProductCategoryServiceImpl productCategoryService;
-    private final SecurityService securityService; // Сервис для получения текущего пользователя
+    private final SecurityService securityService;
+    private final ProductMapper productMapper;
 
     @GetMapping("/new")
     public String newProductPage(){
         return "new";
     }
 
-    @GetMapping("/{productId}")
-    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long productId) {
-        try {
-            Product product = productService.findById(productId); // Получение товара
-            ProductResponse productResponse = mapToProductResponse(product); // Преобразование в DTO
-            return ResponseEntity.ok(productResponse);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Если товар не найден
-        }
-    }
 
-    // Маппинг сущности Product в DTO ProductResponse
-    private ProductResponse mapToProductResponse(Product product) {
-        return ProductResponse.builder()
-                .name(product.getName())
-                .description(product.getDescription())
-                .price(product.getPrice())
-                .imageUrl(product.getImageUrl())
-                .count(product.getCount())
-                .sellerUsername(product.getSeller().getUsername()) // Продавец
-                .categoryIds(product.getCategories().stream()
-                        .map(ProductCategory::getId)
-                        .collect(Collectors.toList())) // ID категорий
-                .build();
-    }
 
-    // Страница редактирования товара
-    @GetMapping("/edit/{id}")
-    public String editProductPage(@PathVariable Long id, Model model) {
-        // Получаем данные о товаре по id
-        Product product = productService.findById(id);
-        if (product != null) {
-            // Добавляем данные о товаре в модель
-            model.addAttribute("product", product);
-            return "new";
-        } else {
-            // Если товар не найден, перенаправляем на страницу ошибки или список товаров
-            return "redirect:/api/v1/user";
-        }
-    }
-
-    // Метод для обновления товара
+//    @GetMapping("/{productId}")
+//    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long productId) {
+//
+//    }
+//
+//
+//    // Страница редактирования товара
+//    @GetMapping("/edit/{id}")
+//    public String editProductPage(@PathVariable Long id, Model model) {
+//
+//    }
+//
+//    // Метод для обновления товара
 //    @PostMapping("/update/{id}")
 //    public String updateProduct(
 //            @PathVariable Long id,
@@ -105,13 +81,21 @@ public class ProductController {
 //    }
 
     @PostMapping("/add")
-    public String addProduct(@AuthenticationPrincipal UserDetails userDetails,@ModelAttribute ProductRequest productRequest,
-            RedirectAttributes redirectAttributes) {
+    public String addProduct(@AuthenticationPrincipal UserDetails userDetails,
+                             @ModelAttribute ProductRequest productRequest,
+                             RedirectAttributes redirectAttributes) {
         try {
             User seller = securityService.getUserByUsername(userDetails.getUsername());
-            Product savedProduct = productService.addNewProduct(productRequest,seller);
+
+            // Используем ProductMapper для преобразования ProductRequest в Product
+            Product product = productMapper.requestToProduct(productRequest);
+            product.setSeller(seller);  // Устанавливаем продавца
+
+            // Сохраняем продукт с использованием сервиса
+            Product savedProduct = productService.addNewProduct(product, productRequest.getProductCategory(), productRequest.getProductImage());
+
             redirectAttributes.addFlashAttribute("message", "Товар успешно добавлен");
-            return "redirect:/api/v1/user";
+            return "redirect:/api/v1/user/my";
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "Ошибка при добавлении товара");

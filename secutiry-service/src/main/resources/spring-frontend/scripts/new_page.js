@@ -46,7 +46,7 @@ $(document).ready(function() {
             contentType: false, // Не устанавливать заголовок Content-Type
             success: function(response) {
                 alert('Товар успешно добавлен');
-                window.location.href = '/api/v1/user';
+                window.location.href = '/api/v1/user/my';
             },
             error: function(xhr, status, error) {
                 console.error('Ошибка при добавлении товара');
