@@ -35,6 +35,13 @@ public class ProductController {
     private final SecurityService securityService;
     private final ProductMapper productMapper;
 
+    @GetMapping("/{id}")
+    public String getProductPage(@PathVariable Long id, Model model) {
+        ProductDto product = ProductDto.fromEntity(productService.findById(id));
+        model.addAttribute("product", product);
+        return "product"; // Ссылается на шаблон "product.html" в Thymeleaf
+    }
+
     @GetMapping("/new")
     public String newProductPage(){
         return "new";

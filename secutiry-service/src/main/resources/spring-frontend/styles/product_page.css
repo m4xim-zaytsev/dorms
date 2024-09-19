@@ -1,0 +1,79 @@
+body {
+    background-color: #f3f4f6;
+}
+
+.product-header {
+    margin-bottom: 20px;
+}
+
+.product-image {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.product-price {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.product-old-price {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.product-description {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.review-section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.review {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.review:last-child {
+    border-bottom: none;
+}
+
+.review-author {
+    font-weight: bold;
+}
+
+.review-text {
+    margin-top: 5px;
+}
+
+.cart-icon {
+    font-size: 24px;
+    color: #007bff;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.cart-icon:hover {
+    color: #0056b3;
+}
+
+.product-name {
+    font-size: 24px; /* Уменьшение размера текста */
+    text-align: left; /* Выровнять текст по левому краю */
+    margin-bottom: 10px; /* Добавить отступ */
+    color: #333; /* Цвет заголовка */
+}
+
+.product-header h1 {
+    font-size: 30px; /* Уменьшение размера текста */
+    text-align: left; /* Выровнять текст по леому краю */
+    margin-bottom: 10px; /* Отступ снизу */
+    color: #333; /* Цвет текста */
+}
+

@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     // Функция для проверки состояния аутентификации
     function checkAuthState() {
         const authButtonsContainer = document.getElementById("auth-buttons");
@@ -105,72 +105,19 @@ $(document).ready(function () {
             window.location.href = "/api/v1/main";  // Перенаправление на страницу входа, если токена нет
         }
     };
-
-    // Функция для загрузки популярных продуктов через API
-    function loadPopularProducts() {
-        $.ajax({
-            url: '/api/v1/main/get-popular-products',
-            type: 'GET',
-            success: function(response) {
-                const owlCarousel = $('.owl-carousel');
-                owlCarousel.trigger('remove.owl.carousel');  // Очистка текущих слайдов
-
-                if (Array.isArray(response) && response.length > 0) {
-                    response.forEach(function(product) {
-                        const imageUrl = product.imageUrl || 'https://via.placeholder.com/150';
-                        const productName = product.name || 'Без названия';
-                        const productPrice = product.price ? `${product.price} ₽` : 'Нет цены';
-                        const productOldPrice = product.oldPrice ? `<span class="product-old-price">${product.oldPrice} ₽</span>` : '';
-
-                        const productHtml = `
-                            <div class="item">
-                                <a href="/api/v1/product/${product.id}" class="product-card-link">
-                                    <div class="product-card text-center">
-                                        <img src="${imageUrl}" alt="${productName}">
-                                        <h5 class="product-name">${productName}</h5>
-                                        <p class="product-price">${productPrice} ${productOldPrice}</p>
-                                    </div>
-                                </a>
-                            </div>`;
-                        owlCarousel.trigger('add.owl.carousel', [$(productHtml)]);  // Корректная вставка нового слайда
-                    });
-                    owlCarousel.trigger('refresh.owl.carousel');  // Обновление карусели после добавления продуктов
-                } else {
-                    console.error("Нет популярных продуктов для отображения.");
-                }
-            },
-            error: function(error) {
-                console.error("Ошибка при загрузке популярных продуктов:", error.responseJSON.message);
-            }
-        });
-    }
-
-    // Вызов функции проверки состояния аутентификации при загрузке страницы
-    checkAuthState();
-
-    // Вызов функции загрузки популярных продуктов при загрузке страницы
-    loadPopularProducts();
-
-    // Инициализация слайдера
-    var owl = $(".owl-carousel").owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: false,
-        dots: false,
-        responsive: {
-            0: { items: 1 },
-            600: { items: 2 },
-            1000: { items: 6 }  // 6 айтемов на экране при большом разрешении
+    let productId = null;
+    $.ajax({
+        url: `/api/v1/product/${productId}/reviews`,
+        method: 'GET',
+        success: function(reviews) {
+            // Отображаем отзывы
+        },
+        error: function(error) {
+            console.error("Error fetching reviews:", error);
         }
     });
 
-    // Привязываем внешние кнопки к слайдеру
-    $(".slider-btn-prev").click(function () {
-        owl.trigger('prev.owl.carousel');
-    });
-    $(".slider-btn-next").click(function () {
-        owl.trigger('next.owl.carousel');
-    });
+    checkAuthState();
 
     // Функция регистрации пользователя
     window.handleRegister = function () {
@@ -193,23 +140,4 @@ $(document).ready(function () {
             }
         });
     };
-
-    // Анимация появления секций при прокрутке
-    $(window).on('scroll', function () {
-        $('.section').each(function () {
-            if ($(window).scrollTop() > $(this).offset().top - $(window).height() / 1.2) {
-                $(this).addClass('section-visible');
-            }
-        });
-    });
 });
-
-
-// Функция для получения приветствия в зависимости от времени суток
-function getGreeting() {
-    const currentHour = new Date().getHours();
-    if (currentHour >= 5 && currentHour < 12) return "Доброе утро";
-    if (currentHour >= 12 && currentHour < 18) return "Добрый день";
-    if (currentHour >= 18 && currentHour < 22) return "Добрый вечер";
-    return "Доброй ночи";
-}

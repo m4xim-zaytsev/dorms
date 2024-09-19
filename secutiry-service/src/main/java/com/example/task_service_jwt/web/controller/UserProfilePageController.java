@@ -11,8 +11,10 @@ import com.example.task_service_jwt.web.model.request.ChangePasswordRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.Cookie;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -99,5 +103,17 @@ public class UserProfilePageController {
         log.info("Пароль пользователя {} был успешно изменен", currentUser.getUsername());
 
         return ResponseEntity.ok("Пароль успешно изменен");
+    }
+
+    @GetMapping("/hello")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails != null) {
+            Map<String, String> response = new HashMap<>();
+            response.put("username", ",\s"+securityService.getUserByUsername(userDetails.getUsername()).getName());
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
 }

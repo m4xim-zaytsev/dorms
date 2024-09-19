@@ -470,3 +470,107 @@ html, body {
   border-radius: 10px;
   object-fit: contain;
 }
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+}
+
+.footer {
+  background-color: #343a40;
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.footer .container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer .social-icons i {
+  margin: 0 10px;
+}
+
+/* Увеличение отступа для секции отзывов */
+.review-section {
+  margin-bottom: 50px; /* Отступ снизу */
+  margin-top: 50px; /* Отступ сверху */
+}
+
+/* Футер занимает всё пространство снизу */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Занимает всю высоту экрана */
+}
+
+.content {
+  flex: 1; /* Основной контент занимает всё оставшееся пространство */
+}
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Занимает всю высоту экрана */
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Занимает всю высоту экрана */
+}
+
+.content {
+  flex: 1; /* Основной контент занимает всё оставшееся пространство */
+}
+
+.footer {
+  background-color: #343a40;
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.footer .container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer .social-icons i {
+  margin: 0 10px;
+}
+

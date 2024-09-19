@@ -84,4 +84,7 @@ public class ProductServiceImpl {
     }
 
 
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
 }
