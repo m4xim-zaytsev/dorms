@@ -19,8 +19,10 @@ public class Product {
     private String name;
     private String description;
     private Double price;
+    private Double DiscountPrice;
     private String imageUrl;
     private Integer count;
+    private String slug;
 
     @ManyToOne
     @JoinColumn(name = "seller_id")

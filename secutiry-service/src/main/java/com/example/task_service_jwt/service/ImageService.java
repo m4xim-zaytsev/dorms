@@ -15,23 +15,16 @@ import java.util.logging.Logger;
 @Service
 public class ImageService {
 
-    private final String uploadDirectory = "src/main/resources/upload_covers";
-
     @Value("${app.upload.path}")
-    String uploadPath;
+    private String uploadPath;
 
     public String saveImage(MultipartFile file) throws IOException {
         String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-        Path filePath = Paths.get(uploadDirectory, fileName);
+        Path filePath = Paths.get(uploadPath, fileName);
         Files.copy(file.getInputStream(), filePath);
-
-//        String savePath = saveNewBookImage(file);
-//        Book bookToUpdate = bookRepository.findBookBySlug(slug);
-//        bookToUpdate.setImage(savePath);
-//        bookRepository.save(bookToUpdate);
-
         return "/upload_covers/" + fileName;
     }
+}
 
 
 //    public String saveNewBookImage(MultipartFile file) throws IOException {
@@ -53,5 +46,5 @@ public class ImageService {
 //
 //        return resourceURI;
 //    }
-}
+
 

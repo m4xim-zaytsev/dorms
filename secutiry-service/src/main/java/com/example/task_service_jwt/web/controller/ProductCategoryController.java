@@ -16,8 +16,11 @@ public class ProductCategoryController {
 
     private final ProductCategoryServiceImpl productCategoryService;
 
+
     @GetMapping
     public List<ProductCategory> getCategories() {
         return productCategoryService.getAllCategories();
     }
+
+
 }

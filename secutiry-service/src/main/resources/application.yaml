@@ -22,7 +22,7 @@ spring:
 
 app:
   upload:
-    path: D:\\doorms\\secutiry-service\\src\\main\\resources\\upload_covers\\
+    path: src/main/resources/upload_covers/
   jwt:
     secret: "secretKey"
     tokenExpiration: 30h

@@ -26,7 +26,8 @@ $(document).ready(function () {
         products.forEach(product => {
             const productCard = `
                 <div class="col-md-4 col-sm-6">
-                    <div class="product-card">
+                    <div class="product-card" >
+                        <a href="/api/v1/product/${product.id}" class="product-card-link">
                         <img src="${product.imageUrl || 'https://via.placeholder.com/150'}" alt="${product.name}">
                         <h5 class="product-name">${product.name}</h5>
                         <p class="product-price">${product.price} ₽ ${product.oldPrice ? `<span class="product-old-price">${product.oldPrice} ₽</span>` : ''}</p>

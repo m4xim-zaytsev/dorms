@@ -19,7 +19,9 @@ public class ProductCategory {
     private Long id;
 
     private String name;
+    private String slug;
 
     @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
+
 }
