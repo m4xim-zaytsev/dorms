@@ -29,7 +29,6 @@ app properties (то же название что и в композ файле 
 
 ## screens
 ![](secutiry-service/src/main/resources/screens/img.png)
-![](secutiry-service/src/main/resources/screens/img_4.png)
 ![](secutiry-service/src/main/resources/screens/img_1.png)
 ![](secutiry-service/src/main/resources/screens/img_2.png)
 ![](secutiry-service/src/main/resources/screens/img_3.png)
